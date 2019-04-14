@@ -32,20 +32,20 @@ def read_img_base64(p):
 
 
 def post(billModel='通用OCR'):
-    path = ps.window_capture("d:\\")
-    URL = 'http://127.0.0.1:8080/ocr'  ##url地址
+    path,size = ps.window_capture("d:\\screen\\")
+    URL = 'http://[2409:8a20:9f0:8380:29b5:9351:2adc:feaa]:8080/ocr'  ##url地址
     imgString = read_img_base64(path)
     headers = {}
     param = {'billModel': billModel,  ##目前支持三种 通用OCR/ 火车票/ 身份证/
              'imgString': imgString, }
     param = json.dumps(param)
     if 1:
-        req = requests.post(URL, data=param, headers=None, timeout=5)
+        req = requests.post(URL, data=param, headers=None, timeout=15)
         data = req.content.decode('utf-8')
         data = json.loads(data)
     else:
         data = []
-    return data
+    return data,size
 
 
-post()
+#post()
